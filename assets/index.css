@@ -1,0 +1,11 @@
+nav{
+    display: inline;
+}
+
+#nav-bar div{
+    color: #FFFFFF;
+    background-color: navy;
+}
+.hidden{
+    display: none;
+}
