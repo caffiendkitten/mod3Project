@@ -87,6 +87,8 @@ getTasklists();
         }
 
         function displayModal(tasklists){
+            // const taskListId = document.createElement("input")
+            // taskListId.setAttribute("class", "hidden")
             const form = document.createElement('form')
             form.setAttribute("class", "form-group")
             const formInput = document.createElement('input')
@@ -99,6 +101,7 @@ getTasklists();
             displayBox.classList.add("task-show-popup")
             displayBox.setAttribute("id", "task-show-popup")
             const taskUl = document.createElement("ul")
+            taskUl.setAttribute("id", "taskUl")
             for(let i = 0; i < tasks.length; i++){
                 let taskLi = document.createElement('li')
                 taskLi.textContent = tasks[i].item
@@ -123,7 +126,7 @@ getTasklists();
             form.addEventListener('submit', ()=>{
                 event.preventDefault()
                 // console.log(formInput.value)
-                addToList(tasks, formInput.value)
+                addToList(tasks, formInput.value, tasklists.id)
                 // console.log("hello")
             })
         }
@@ -146,18 +149,20 @@ getTasklists();
 
 
 
-        function addToList(task, formInput){
+        function addToList(task, formInput, taskListId){
             const displayBox = document.getElementById("task-show-popup")
             const newItem = document.createElement('li')
+            const boxUl = document.getElementById("taskUl")
             newItem.innerText = formInput
-            displayBox.appendChild(newItem)
+
+            boxUl.appendChild(newItem)
             // console.log(formInput)
-            addTasktoDb(task, formInput)
+            addTasktoDb(task, formInput, taskListId)
 
             //save to database
         }
 
-        function addTasktoDb(task, formInput){
+        function addTasktoDb(task, formInput, taskListId){
             // console.log(task[0].tasklist_id)
             // debugger;
             fetch(taskURL, {
@@ -168,7 +173,7 @@ getTasklists();
                 },
                 body: JSON.stringify({
                     item: formInput,
-                    tasklist_id: task[0].tasklist_id
+                    tasklist_id: taskListId
 
                 })
             })
