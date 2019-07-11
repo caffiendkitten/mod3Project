@@ -12,6 +12,7 @@ class TasklistsController < ApplicationController
     def destroy
         tasklist = Tasklist.find(params[:id])
         tasklist.delete
+
     end
 
 

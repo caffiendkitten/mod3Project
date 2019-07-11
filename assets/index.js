@@ -1,7 +1,7 @@
 const userURL = "http://localhost:3000/users"
 const taskListURL = "http://localhost:3000/tasklists"
 const taskURL = "http://localhost:3000/tasks"
-const navbar = document.getElementById("navbar")
+const navbar = document.getElementsByClassName("topnav")
 
 const form = document.getElementsByClassName("form-group")
 const mainContainer = document.getElementById('main')
@@ -20,6 +20,7 @@ getTasklists();
 
 //fetch TaskLists and their listed Items
         function getTasklists(){
+
             fetch (taskListURL)
             .then(resp => resp.json())
             .then(json => showTaskLists(json))
@@ -59,7 +60,13 @@ getTasklists();
 
 
         function showTaskLists(tasklists) {
+            // while(navbar.firstChild){
+            //     navbar.removeChild(navbar.firstChild)
+            // }
             const showList = document.getElementById("showList")
+            while(showList.children.length > 0) {
+                showList.children[0].remove();
+            }
             const deleteBtn = document.getElementById("deleteProject")
             deleteBtn.addEventListener("click", ()=> {
                 deleteList(tasklists)
@@ -75,7 +82,7 @@ getTasklists();
                     while(mainContainer.firstChild){
                         mainContainer.removeChild(mainContainer.firstChild)
                     }
-                    displayModal(tasklists[i]);
+                    displayTasks(tasklists[i]);
                     //call input formInput
                     //show project list
                 })
@@ -84,31 +91,34 @@ getTasklists();
             }
         }
 
-        function displayModal(tasklists){
+        function displayTasks(tasklists){
             // const taskListId = document.createElement("input")
             // taskListId.setAttribute("class", "hidden")
             const form = document.createElement('form')
             form.setAttribute("class", "form-group")
+            form.setAttribute("id", "form-group")
             const formInput = document.createElement('input')
             const formSubmitButton = document.createElement('button')
             formSubmitButton.innerText = "Add a Task"
 
-
-            let tasks = tasklists.tasks
+            // console.log(tasklists.length)
+            let stuff = tasklists.tasks
+            // console.log(stuff.length)
             const displayBox = document.createElement('div')
             displayBox.classList.add("task-show-popup")
             displayBox.setAttribute("id", "task-show-popup")
             const taskUl = document.createElement("ul")
             taskUl.setAttribute("id", "taskUl")
-            for(let i = 0; i < tasks.length; i++){
+            for(let i = 0; i < stuff.length; i++){
                 let taskLi = document.createElement('li')
-                taskLi.textContent = tasks[i].item
+                taskLi.textContent = stuff[i].item
+                // console.log(stuff[i])
                 taskUl.appendChild(taskLi)
 
                 let removeButton = document.createElement("button")
                 removeButton.addEventListener("click", () =>{
                     taskLi.setAttribute("class", "hidden")
-                    deleteItem(taskLi, tasks[i]);
+                    deleteItem(taskLi, stuff[i]);
                 })
                 removeButton.textContent = "Remove me"
                 removeButton.setAttribute("id", "removeBtn")
@@ -124,8 +134,9 @@ getTasklists();
             form.addEventListener('submit', ()=>{
                 event.preventDefault()
                 // console.log(formInput.value)
-                addToList(tasks, formInput.value, tasklists.id)
+                addToList(stuff, formInput.value, tasklists.id)
                 // console.log("hello")
+                document.getElementById("form-group").reset();
             })
         }
 
@@ -186,6 +197,7 @@ getTasklists();
         function createNewProject(){
             // console.log("hit new proejct")
             const newProjectForm = document.createElement("form")
+            newProjectForm.setAttribute("id", "projectForm")
             const newPFInput = document.createElement("input")
             const newPFButton = document.createElement("button")
             newPFButton.innerText = "New Project"
@@ -196,6 +208,7 @@ getTasklists();
             newProjectForm.addEventListener('submit', ()=>{
                 event.preventDefault()
                 saveProject(newPFInput.value)
+                document.getElementById("projectForm").reset();
             })
         }
         function saveProject(projectTitle){
@@ -212,7 +225,7 @@ getTasklists();
                 })
             })
             .then(res => res.json())
-            .then(json => showTaskLists(json))
+            .then(json => getTasklists())
         }
 
 
@@ -230,7 +243,11 @@ getTasklists();
                 deleteBtn.setAttribute("class", "danger")
                 deleteBtn.innerText = "Delete This Project"
                 deleteBtn.addEventListener("click", ()=>{
+
                     deleteProject(tasklists[i])
+                    // debugger;
+
+                    project.classList.add("hidden")
                 })
                 project.textContent = tasklists[i].title
                 project.appendChild(deleteBtn)
@@ -252,8 +269,8 @@ getTasklists();
                         tasklist_id: tasklist.id
                     })
 
-                })
-
+                }).then(() => getTasklists())
+                // getTasklists(); //repopulates nav bar
             }
 }
 
