@@ -3,4 +3,9 @@ class TasksController < ApplicationController
         tasks = Task.all
         render json: tasks
     end
+    
+    def destroy
+        task = Task.find(params[:id])
+        task.delete
+    end
 end

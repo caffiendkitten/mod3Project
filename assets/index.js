@@ -80,9 +80,10 @@ getTasklists();
 
                 let removeButton = document.createElement("button")
                 removeButton.addEventListener("click", () =>{
-                    deleteItem(taskLi, tasks[i].item);
+                    deleteItem(taskLi, tasks[i]);
                 })
                 removeButton.textContent = "Remove me from your silly game"
+                removeButton.setAttribute("id", "removeBtn")
                 taskLi.appendChild(removeButton)
             }
             // while(displayBox.firstChild){
@@ -91,18 +92,27 @@ getTasklists();
 
             displayBox.appendChild(taskUl)
             mainContainer.appendChild(displayBox)
-            console.log("hit")
+
 
 
 
 
         }
 
-        function deleteItem(taskLi, item){
+        function deleteItem(taskLi, task){
             //deletestuff
-            console.log(item)
-
-            taskLi.classList.add("hidden")
+            console.log(task)
+            fetch(`${taskURL}/${task.id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    id: task.id
+                })
+            })
+            .then(getTasks)
         }
 }
 
