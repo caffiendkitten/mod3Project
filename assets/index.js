@@ -9,19 +9,23 @@ const mainContainer = document.getElementById('main')
  function main(){
 
 getUsers();
-getTasks();
 getTasklists();
 
+//fetch User list
         function getUsers(){
             fetch (userURL)
             .then(resp => resp.json())
             .then(json => displayUsers(json))
         }
+
+//fetch TaskLists and their listed Items
         function getTasklists(){
             fetch (taskListURL)
             .then(resp => resp.json())
             .then(json => showTaskLists(json))
         }
+
+        ///Get individual tasks
         function getTasks(){
             fetch (taskURL)
             .then(resp => resp.json())
@@ -33,6 +37,8 @@ getTasklists();
                 displayUser(usersObj[i])
             }
         }
+
+        //Display User --NOT FUNCTIONAL
         function displayUser(userObj){
             // console.log(userObj)
             const welcomeUser = document.getElementById("usersTasks")
@@ -51,22 +57,14 @@ getTasklists();
             }
         }
 
-        function displayTasks(taskObj){
-            for(let i =0; i < taskObj.length;i++){
-                // console.log(taskObj[i])
-            }
-        }
-
-        function displayTasklist(tasklistObj){
-            for(let i =0; i < tasklistObj.length;i++){
-                // console.log(tasklistObj[i])
-            }
-        }
-
 
         function showTaskLists(tasklists) {
             const showList = document.getElementById("showList")
-
+            const deleteBtn = document.getElementById("deleteProject")
+            deleteBtn.addEventListener("click", ()=> {
+                deleteList(tasklists)
+                // console.log("I wanna go to sleep!!")
+            })
             for(let i =0; i < tasklists.length;i++){
                 // console.log(tasklists[i])
                 let aTag = document.createElement("a")
@@ -112,7 +110,7 @@ getTasklists();
                     taskLi.setAttribute("class", "hidden")
                     deleteItem(taskLi, tasks[i]);
                 })
-                removeButton.textContent = "Remove me from your silly game"
+                removeButton.textContent = "Remove me"
                 removeButton.setAttribute("id", "removeBtn")
                 taskLi.appendChild(removeButton)
             }
@@ -180,13 +178,84 @@ getTasklists();
             .then(res =>res.json())
             .then(json => console.log(json))
         }
+
+        const newProject = document.getElementById("newProject")
+        newProject.addEventListener("click", () =>{
+            createNewProject()
+        })
+        function createNewProject(){
+            // console.log("hit new proejct")
+            const newProjectForm = document.createElement("form")
+            const newPFInput = document.createElement("input")
+            const newPFButton = document.createElement("button")
+            newPFButton.innerText = "New Project"
+
+            newProjectForm.appendChild(newPFInput)
+            newProjectForm.appendChild(newPFButton)
+            mainContainer.appendChild(newProjectForm)
+            newProjectForm.addEventListener('submit', ()=>{
+                event.preventDefault()
+                saveProject(newPFInput.value)
+            })
+        }
+        function saveProject(projectTitle){
+            console.log(projectTitle)
+            fetch(taskListURL,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    title: projectTitle,
+                    user_id: 1
+                })
+            })
+            .then(res => res.json())
+            .then(json => showTaskLists(json))
+        }
+
+
+
+//Get TaskLists
+        function deleteList(tasklists){
+            const card = document.createElement("div")
+            console.log(tasklists)
+
+            let projectList = document.createElement("ul")
+            for(let i = 0; i < tasklists.length; i ++){
+                let project = document.createElement("li")
+                console.log("I'm hungary")
+                let deleteBtn = document.createElement("button")
+                deleteBtn.setAttribute("class", "danger")
+                deleteBtn.innerText = "Delete This Project"
+                deleteBtn.addEventListener("click", ()=>{
+                    deleteProject(tasklists[i])
+                })
+                project.textContent = tasklists[i].title
+                project.appendChild(deleteBtn)
+                projectList.appendChild(project)
+                card.appendChild(projectList)
+            }
+
+            mainContainer.appendChild(card)
+        }
+            function deleteProject(tasklist) {
+                // console.log(tasklist.id)
+                fetch(`${taskListURL}/${tasklist.id}`,{
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        tasklist_id: tasklist.id
+                    })
+
+                })
+
+            }
 }
-
-
-
-
-
-
 
 
 main();
