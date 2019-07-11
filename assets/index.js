@@ -35,6 +35,20 @@ getTasklists();
         }
         function displayUser(userObj){
             // console.log(userObj)
+            const welcomeUser = document.getElementById("usersTasks")
+            // console.log("hit")
+            if (userObj.id === 1){
+                // console.log("hi")
+            }
+            if (userObj.id === 2){
+                // console.log("hi")
+            }
+            if (userObj.id === 3){
+                // console.log("hi")
+            }
+            if (userObj.id === 4){
+                // console.log("hi")
+            }
         }
 
         function displayTasks(taskObj){
@@ -52,26 +66,38 @@ getTasklists();
 
         function showTaskLists(tasklists) {
             const showList = document.getElementById("showList")
+
             for(let i =0; i < tasklists.length;i++){
-                console.log(tasklists[i])
-                let li = document.createElement("li")
-                li.setAttribute("data-toggle", "modal" )
-                li.setAttribute("data-target", "modal")
-                li.addEventListener("click", () => {
+                // console.log(tasklists[i])
+                let aTag = document.createElement("a")
+                aTag.setAttribute("data-toggle", "modal" )
+                aTag.setAttribute("data-target", "modal")
+
+                aTag.addEventListener("click", () => {
+                    while(mainContainer.firstChild){
+                        mainContainer.removeChild(mainContainer.firstChild)
+                    }
                     displayModal(tasklists[i]);
+                    //call input formInput
+                    //show project list
                 })
-                li.textContent = tasklists[i].title
-                showList.appendChild(li)
+                aTag.textContent = tasklists[i].title
+                showList.appendChild(aTag)
             }
-
-
         }
+
         function displayModal(tasklists){
+            const form = document.createElement('form')
+            form.setAttribute("class", "form-group")
+            const formInput = document.createElement('input')
+            const formSubmitButton = document.createElement('button')
+            formSubmitButton.innerText = "Add a Task"
+
 
             let tasks = tasklists.tasks
             const displayBox = document.createElement('div')
             displayBox.classList.add("task-show-popup")
-            // displayBox.setAttribute("id", "modal")
+            displayBox.setAttribute("id", "task-show-popup")
             const taskUl = document.createElement("ul")
             for(let i = 0; i < tasks.length; i++){
                 let taskLi = document.createElement('li')
@@ -80,23 +106,26 @@ getTasklists();
 
                 let removeButton = document.createElement("button")
                 removeButton.addEventListener("click", () =>{
+                    taskLi.setAttribute("class", "hidden")
                     deleteItem(taskLi, tasks[i]);
                 })
                 removeButton.textContent = "Remove me from your silly game"
                 removeButton.setAttribute("id", "removeBtn")
                 taskLi.appendChild(removeButton)
             }
-            // while(displayBox.firstChild){
-            //     displayBox.removeChild(displayBox.firstChild)
-            // }
+            form.appendChild(formInput)
+            form.appendChild(formSubmitButton)
+            displayBox.appendChild(form)
 
             displayBox.appendChild(taskUl)
             mainContainer.appendChild(displayBox)
 
-
-
-
-
+            form.addEventListener('submit', ()=>{
+                event.preventDefault()
+                // console.log(formInput.value)
+                addToList(tasks, formInput.value)
+                // console.log("hello")
+            })
         }
 
         function deleteItem(taskLi, task){
@@ -115,7 +144,44 @@ getTasklists();
             .then(getTasks)
         }
 
+
+
+        function addToList(task, formInput){
+            const displayBox = document.getElementById("task-show-popup")
+            const newItem = document.createElement('li')
+            newItem.innerText = formInput
+            displayBox.appendChild(newItem)
+            // console.log(formInput)
+            addTasktoDb(task, formInput)
+
+            //save to database
+        }
+
+        function addTasktoDb(task, formInput){
+            // console.log(task[0].tasklist_id)
+            // debugger;
+            fetch(taskURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    item: formInput,
+                    tasklist_id: task[0].tasklist_id
+
+                })
+            })
+            .then(res =>res.json())
+            .then(json => console.log(json))
+        }
 }
+
+
+
+
+
+
 
 
 main();
