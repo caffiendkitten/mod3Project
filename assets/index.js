@@ -128,18 +128,30 @@ getTasklists();
             form.appendChild(formInput)
             form.appendChild(formSubmitButton)
             displayBox.appendChild(form)
-
+            // let formInputValue = formInput.value
+            // console.log("form input", formInputValue)
             displayBox.appendChild(taskUl)
             mainContainer.appendChild(displayBox)
 
             form.addEventListener('submit', ()=>{
                 event.preventDefault()
+                let formInputValue = document.getElementById("formInput")
+                console.log("form input::", formInput.innerText)
                 // console.log(formInput.value)
+                let x = formInput.value
+                if(x == ""){
+                    console.log(x)
+                    alert("Please Enter a Task");
+                    return false;
+                }else{
                 addToList(stuff, formInput.value, tasklists.id)
+                }
                 // console.log("hello")
+
                 document.getElementById("form-group").reset();
             })
         }
+
 
         function deleteItem(taskLi, task){
             //deletestuff
@@ -174,8 +186,6 @@ getTasklists();
         }
 
         function addTasktoDb(task, formInput, taskListId){
-            // console.log(task[0].tasklist_id)
-            // debugger;
             fetch(taskURL, {
                 method: "POST",
                 headers: {
@@ -211,8 +221,15 @@ getTasklists();
             mainContainer.appendChild(newProjectForm)
             newProjectForm.addEventListener('submit', ()=>{
                 event.preventDefault()
+                let x = newPFInput.value
+                if(x == ""){
+                    console.log(x)
+                    alert("Please Enter a Task");
+                    return false;
+                }else{
                 saveProject(newPFInput.value)
                 document.getElementById("projectForm").reset();
+                }
             })
         }
         function saveProject(projectTitle){
