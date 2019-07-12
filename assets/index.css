@@ -8,7 +8,7 @@ nav{
 }
 
 #nav-bar div{
-    color: #07393C;
+    color: white;
     background-color: #40A798;
 }
 .hidden{
@@ -20,7 +20,7 @@ nav{
   text-align: center;
   padding: 10px 10px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 50px;
 }
 ul {
     background-color: rgba(164, 213, 218, 0.5);
@@ -39,10 +39,16 @@ h2 {
     border-radius: 5px;
 
 }
+input{
+    border-radius: 10px;
+}
 button{
     font-size: 13px;
     margin: 15px 30px;
-    border-radius: 10px
+    border-radius: 10px;
+}
+.interfaceBtn{
+    font-size: 20px;
 }
 #removeBtn{
     background-color: #f0edee;
@@ -59,10 +65,11 @@ button{
 
 }
 
+/* Project List nav */
 .navbar a {
   float: left;
-  font-size: 16px;
-  color: white;
+  font-size: 26px;
+  color: red;
   text-align: center;
   padding: 0px 16px;
   text-decoration: none;
@@ -73,9 +80,10 @@ button{
   overflow: hidden;
 }
 
+/* user list drop down tab */
 .dropdown .dropbtn {
   cursor: pointer;
-  font-size: 16px;
+  font-size: 25px;
   border: none;
   outline: none;
   color: white;
@@ -86,6 +94,7 @@ button{
 }
 
 /* DROP DOWN CSS */
+/* any hover over styling... carefult it is specific */
 .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
   background-color: #2C666E;
 }
@@ -101,7 +110,6 @@ button{
 
 .dropdown-content a {
   float: none;
-  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -109,7 +117,7 @@ button{
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: white;
 }
 
 .show {
