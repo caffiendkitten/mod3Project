@@ -2,41 +2,68 @@
 <html lang="en" dir="ltr">
     <head>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="index.css" rel="stylesheet" >
         <meta charset="utf-8">
         <title>Get Sh!t Done</title>
     </head>
     <body>
+        <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function dropdownFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
 
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+          if (!e.target.matches('.dropbtn')) {
+          var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+              myDropdown.classList.remove('show');
+            }
+          }
+        }
+        </script>
 
 
 
         <nav id="nav-bar">
-            <span id="usersTasks">
-                Task Lists
-            </span>
-            <div class="topnav">
+            <div class="navbar">
+
+              <div class="dropdown">
+              <button class="dropbtn" onclick="dropdownFunction()">Users List
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content" id="myDropdown">
+                <!-- <a href="#">User1</a>
+                <a href="#">User2</a>
+                <a href="#">User33</a> -->
+              </div>
+              </div>
+            <!-- </div> -->
+
+            <!-- <div class="topnav"> -->
                 <ul id= "showList">
 
                 </ul>
             </div>
         </nav>
 
-        <h1></h1>
-        <h2>Task List Items</h2>
-        <div>
-            <button id="newProject">Create New Task List</button>
-            <button id="deleteProject">Delete Task List</button>
-        </div>
+<!-- begin main content -->
+        <center>
+            <h2>Task List Items</h2>
+            <div>
+                <button id="newProject">Create New Task List</button>
+                <button id="deleteProject">Delete Task List</button>
+            </div>
 
-        <div class="container" id="main">
-            <!-- <p>Add Item to List</p> -->
-            <!-- <form class="form-group" action="index.html" method="post">
-                <input type="text"  name="" value="Add Item to List">
-                <button id = "addButton" type="button" name="button" class="btn-success">Add Task</button>
-            </form> -->
+            <div class="container" id="main">
+                <!-- <p>Adds Item to List</p> -->
 
-        </div>
+            </div>
+        </center>
+<!-- end main content -->
 
 
         <script src="index.js"></script>
