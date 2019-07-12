@@ -63,7 +63,8 @@ getTasklists();
             const deleteBtn = document.getElementById("deleteProject")
             deleteBtn.addEventListener("click", ()=> {
                 deleteList(tasklists)
-                // console.log("I wanna go to sleep!!")
+                 // console.log("I wanna go to sleep!!")
+
             })
             for(let i =0; i < tasklists.length;i++){
                 // console.log(tasklists[i])
@@ -186,6 +187,8 @@ getTasklists();
 
         const newProject = document.getElementById("newProject")
         newProject.addEventListener("click", () =>{
+            while(mainContainer.firstChild){
+                mainContainer.removeChild(mainContainer.firstChild)}
             createNewProject()
         })
         function createNewProject(){
@@ -226,6 +229,8 @@ getTasklists();
 
 //Get TaskLists
         function deleteList(tasklists){
+            while(mainContainer.firstChild){
+                mainContainer.removeChild(mainContainer.firstChild)}
             const card = document.createElement("div")
             // console.log(tasklists)
 
@@ -239,6 +244,8 @@ getTasklists();
                 deleteBtn.addEventListener("click", ()=>{
 
                     deleteProject(tasklists[i])
+                    while(mainContainer.firstChild){
+                        mainContainer.removeChild(mainContainer.firstChild)}
                     // debugger;
 
                     project.classList.add("hidden")

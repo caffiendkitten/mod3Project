@@ -1,6 +1,7 @@
 body {
     background-color: rgba(255, 234, 165, 0.2);
     font-size: 30px;
+    font-family: 'Quicksand', sans-serif;
 }
 nav{
     display: inline;
@@ -21,20 +22,32 @@ nav{
   text-decoration: none;
   font-size: 17px;
 }
-#taskUl {
+ul {
     background-color: rgba(164, 213, 218, 0.5);
-    width: 50%;
-    border-radius: 5%;
+    width: 65%;
+    border-radius: 5px;
 }
+li{
+    border: 10px;
+    text-align: left;
+}
+
 h2 {
     color: white;
     background-color: #2C666E;
     width: 75%;
-    border-radius: 5%;
+    border-radius: 5px;
 
 }
 button{
     font-size: 13px;
+    margin: 15px 30px;
+    border-radius: 10px
+}
+#removeBtn{
+    background-color: #f0edee;
+    margin-left: 10px;
+    align: right;
 }
 
 /* User List Drop Down Beginning */
@@ -42,7 +55,7 @@ button{
   overflow: hidden;
   background-color: #333;
   font-family: Arial, Helvetica, sans-serif;
-  border-radius: 5%;
+  border-radius: 5px;
 
 }
 
