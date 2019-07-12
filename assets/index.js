@@ -30,7 +30,10 @@ getTasklists();
         function getTasks(){
             fetch (taskURL)
             .then(resp => resp.json())
-            .then(json => displayTasks(json))
+            .then(json => {
+                console.log('getTasks()', json)
+                displayTasks(json)
+            })
         }
 
 //============= BEGIN display Users Drop down
@@ -87,6 +90,7 @@ getTasklists();
 
 //============= BEGIN display each task within the Project List
         function displayTasks(tasklists){
+            console.log('top of displayTasks()', tasklists)
             // const taskListId = document.createElement("input")
             // taskListId.setAttribute("class", "hidden")
             const form = document.createElement('form')
@@ -96,9 +100,9 @@ getTasklists();
             const formSubmitButton = document.createElement('button')
             formSubmitButton.innerText = "Add a Task"
 
-            // console.log(tasklists.tasks)
+            // console.log(tasklists.tasks.length)
             let stuff = tasklists.tasks
-            // console.log("stuff",stuff)
+            console.log("stuff",stuff)
             const displayBox = document.createElement('div')
             displayBox.classList.add("task-show-popup")
             displayBox.setAttribute("id", "task-show-popup")
@@ -113,6 +117,8 @@ getTasklists();
                 let removeButton = document.createElement("button")
                 removeButton.addEventListener("click", () =>{
                     taskLi.setAttribute("class", "hidden")
+                    console.log('in remove event listener', taskLi)
+                    console.log('in remove event listener pt 2', stuff[i])
                     deleteItem(taskLi, stuff[i]);
                 })
                 removeButton.textContent = "Remove me"
@@ -137,7 +143,8 @@ getTasklists();
 
         function deleteItem(taskLi, task){
             //deletestuff
-            // console.log(task)
+            console.log('in deleteItem()', task)
+            console.log('in deleteItem pt deux', taskLi)
             fetch(`${taskURL}/${task.id}`, {
                 method: "DELETE",
                 headers: {
@@ -148,7 +155,7 @@ getTasklists();
                     id: task.id
                 })
             })
-            .then(getTasks)
+            .then(getTasklists)
         }
 
 
@@ -181,7 +188,7 @@ getTasklists();
 
                 })
             })
-            // .then(res =>res.json())
+            .then(getTasklists)
             // .then(json => console.log(json))
         }
 
