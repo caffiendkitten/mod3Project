@@ -26,40 +26,33 @@ getTasklists();
             .then(json => showTaskLists(json))
         }
 
-        ///Get individual tasks
+///Get individual tasks
         function getTasks(){
             fetch (taskURL)
             .then(resp => resp.json())
             .then(json => displayTasks(json))
         }
 
+//============= BEGIN display Users Drop down
         function displayUsers(usersObj){
+            const welcomeUser = document.getElementById("myDropdown")
+
             for(let i =0; i < usersObj.length;i++){
-                displayUser(usersObj[i])
+                let a2Tag = document.createElement("a")
+                a2Tag.textContent = usersObj[i].name
+                welcomeUser.appendChild(a2Tag)
             }
+
+            // console.log("users",usersObj)
         }
-
-        //Display User --NOT FUNCTIONAL
-        function displayUser(userObj){
-            // console.log(userObj)
-            const welcomeUser = document.getElementById("usersTasks")
-            // console.log("hit")
-            if (userObj.id === 1){
-                // console.log("hi")
-            }
-            if (userObj.id === 2){
-                // console.log("hi")
-            }
-            if (userObj.id === 3){
-                // console.log("hi")
-            }
-            if (userObj.id === 4){
-                // console.log("hi")
-            }
-        }
+//============= END display Users Drop down
 
 
+
+
+//============= BEGIN display Project List
         function showTaskLists(tasklists) {
+            // console.log(tasklists)
             // while(navbar.firstChild){
             //     navbar.removeChild(navbar.firstChild)
             // }
@@ -75,8 +68,8 @@ getTasklists();
             for(let i =0; i < tasklists.length;i++){
                 // console.log(tasklists[i])
                 let aTag = document.createElement("a")
-                aTag.setAttribute("data-toggle", "modal" )
-                aTag.setAttribute("data-target", "modal")
+                aTag.setAttribute("class", "dropdown" )
+                // aTag.setAttribute("class", "fa fa-caret-down")
 
                 aTag.addEventListener("click", () => {
                     while(mainContainer.firstChild){
@@ -91,6 +84,7 @@ getTasklists();
             }
         }
 
+//============= BEGIN display each task within the Project List
         function displayTasks(tasklists){
             // const taskListId = document.createElement("input")
             // taskListId.setAttribute("class", "hidden")
@@ -101,9 +95,9 @@ getTasklists();
             const formSubmitButton = document.createElement('button')
             formSubmitButton.innerText = "Add a Task"
 
-            // console.log(tasklists.length)
+            // console.log(tasklists.tasks)
             let stuff = tasklists.tasks
-            // console.log(stuff.length)
+            // console.log("stuff",stuff)
             const displayBox = document.createElement('div')
             displayBox.classList.add("task-show-popup")
             displayBox.setAttribute("id", "task-show-popup")
@@ -142,7 +136,7 @@ getTasklists();
 
         function deleteItem(taskLi, task){
             //deletestuff
-            console.log(task)
+            // console.log(task)
             fetch(`${taskURL}/${task.id}`, {
                 method: "DELETE",
                 headers: {
@@ -186,8 +180,8 @@ getTasklists();
 
                 })
             })
-            .then(res =>res.json())
-            .then(json => console.log(json))
+            // .then(res =>res.json())
+            // .then(json => console.log(json))
         }
 
         const newProject = document.getElementById("newProject")
@@ -212,7 +206,7 @@ getTasklists();
             })
         }
         function saveProject(projectTitle){
-            console.log(projectTitle)
+            // console.log(projectTitle)
             fetch(taskListURL,{
                 method: "POST",
                 headers: {
@@ -233,12 +227,12 @@ getTasklists();
 //Get TaskLists
         function deleteList(tasklists){
             const card = document.createElement("div")
-            console.log(tasklists)
+            // console.log(tasklists)
 
             let projectList = document.createElement("ul")
             for(let i = 0; i < tasklists.length; i ++){
                 let project = document.createElement("li")
-                console.log("I'm hungary")
+                // console.log("I'm hungary")
                 let deleteBtn = document.createElement("button")
                 deleteBtn.setAttribute("class", "danger")
                 deleteBtn.innerText = "Delete This Project"
