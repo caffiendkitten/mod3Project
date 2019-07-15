@@ -41,9 +41,8 @@ This To-Do list application will currently allow 1 user to Create a Project List
 
 ## contributors
 
-* [DaNeil Coulthard] (https://github.com/caffiendkitten)
 * [Bryn Dunnells](https://github.com/BluesBaka)
-
+* [DaNeil Coulthard](https://github.com/caffiendkitten)
 
 #### Learn.co Educational Content License
 
